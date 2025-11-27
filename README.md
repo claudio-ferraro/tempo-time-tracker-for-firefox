@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <strong>Track your work time directly from Firefox and log it to Tempo Timesheets</strong>
+  <strong>Track and visualize your progress on Jira issues</strong>
 </p>
 
 <p align="center">
@@ -19,27 +19,25 @@
 
 ---
 
-A powerful Firefox extension that brings Tempo time tracking to your browser. Track time while you work, search for Jira issues, and log your hours - all without leaving your current tab.
+Track the duration of your work on Jira issues with real-time browser trackers.
+
+Start a tracker and assign it to a Jira issue, or use it for work outside of Jira:
+- Add new trackers and pause or stop them as required
+- Use as many trackers as you like when working on multiple issues at once
+- Visualize all active trackers across your browser tabs
+- Locate trackers easily from the bottom-right of your browser
+
+Time Tracker for Firefox is free and available for all Tempo customers on Jira Cloud.
 
 ## ✨ Features
 
-### Core Functionality
-- 🕐 **Floating Time Tracker** - A sleek, draggable overlay on every webpage
-- 🔍 **Smart Issue Search** - Find Jira issues by key (e.g., "ABC-123"), URL, or text search
-- ⏱️ **Multiple Timers** - Run multiple trackers simultaneously for different tasks
-- 📝 **Work Descriptions** - Add detailed descriptions to your time logs
-- ✅ **One-Click Logging** - Log time directly to Tempo with a single click
-
-### Productivity
+- ⏱️ **Real-time Trackers** - Track time with a floating overlay on every webpage
+- 🔍 **Issue Search** - Find Jira issues by key (e.g., "ABC-123"), URL, or text search  
+- 📊 **Multiple Timers** - Run as many trackers as you need for parallel tasks
 - 🔄 **Cross-Tab Sync** - Trackers stay synchronized across all browser tabs
-- 💾 **Persistent Timers** - Your timers continue running even after closing the browser
-- 🔄 **Automatic Token Refresh** - Stay logged in without manual re-authentication
+- 💾 **Persistent Timers** - Timers continue running even after closing Firefox
 - 🎯 **Minimal Interface** - Collapses to a small button when not in use
-
-### Security & Privacy
-- 🔐 **Secure OAuth 2.0** - Sign in safely with your Atlassian account using PKCE
-- 🛡️ **No Data Collection** - Your data stays in your browser
-- 🔒 **Encrypted Token Storage** - Tokens stored securely in browser storage
+- 🔐 **Secure OAuth 2.0** - Sign in safely with your Atlassian account
 - 📖 **Open Source** - Full transparency - audit the code yourself
 
 ## 📥 Installation
@@ -66,18 +64,18 @@ A powerful Firefox extension that brings Tempo time tracking to your browser. Tr
 ## 🚀 How to Use
 
 ### Getting Started
-1. **Sign In** - Click the extension icon (puzzle piece) in your toolbar and sign in with your Atlassian account
-2. **Start Tracking** - A floating tracker appears in the bottom-right corner of every page
+1. **Sign In** - Click the extension icon in your toolbar and sign in with your Atlassian account
+2. **Start Tracking** - Click "Start Tracking" on the floating overlay (bottom-right)
 3. **Select Issue** - Click the issue field and search for your Jira issue
-4. **Track Time** - Click "Start" to begin tracking
-5. **Log Work** - When finished, click "Log Time" to save your work to Tempo
+4. **Track Time** - Use play/pause to control your tracker
+5. **Log Work** - Go to the Log Time form on Tempo Timesheets to log your tracked time
 
 ### Tips & Tricks
-- **Drag the tracker** anywhere on the screen for convenience
-- **Collapse the tracker** by clicking the minimize button
+- **Collapse the tracker** by clicking the minimize button (arrow icon)
 - **Search by URL** - Paste a Jira issue URL to quickly select it
-- **Multiple trackers** - Add more trackers for parallel tasks
+- **Multiple trackers** - Click the + button to add more trackers for parallel tasks
 - **Continue later** - Your timer persists even if you close the browser
+- **Add descriptions** - Click on a tracker to expand it and add notes
 
 ## 🛠️ Development
 
@@ -176,10 +174,10 @@ This extension is designed with privacy and security as top priorities:
 - Refresh the page
 - Check if the extension is enabled in `about:addons`
 
-**"Failed to log time"**
-- Verify you have permission to log time on the selected issue
+**Issue search not working**
+- Verify you have access to the Jira project
 - Check your internet connection
-- Ensure your Tempo subscription is active
+- Try signing out and signing in again
 
 ### Reporting Bugs
 

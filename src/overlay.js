@@ -890,23 +890,20 @@
         descInput.oninput = (e) => setDescription(t.id, e.target.value);
         card.appendChild(descInput);
 
-        // Log button (only show when logged in)
+        // Link to Tempo (only show when logged in)
         if (loggedIn) {
-          const logRow = document.createElement('div');
-          logRow.className = 'tempo-actions';
-          
-          const logBtn = document.createElement('button');
-          logBtn.className = 'tempo-log-btn';
-          logBtn.textContent = 'Log Time';
-          logBtn.onclick = () => alert('Log Time (Tempo integration coming soon)');
+          const linkRow = document.createElement('div');
+          linkRow.className = 'tempo-actions';
+          linkRow.style.justifyContent = 'flex-end';
           
           const extBtn = document.createElement('button');
           extBtn.className = 'tempo-btn';
           extBtn.innerHTML = icons.external;
+          extBtn.title = 'Open Tempo Timesheets';
           extBtn.onclick = () => window.open('https://app.tempo.io/', '_blank');
           
-          logRow.append(logBtn, extBtn);
-          card.appendChild(logRow);
+          linkRow.append(extBtn);
+          card.appendChild(linkRow);
         }
 
       } else {
