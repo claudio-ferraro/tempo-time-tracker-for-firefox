@@ -5,8 +5,8 @@ const SETTINGS_KEY = 'tempo_settings';
 // OAuth Configuration
 const OAUTH_CONFIG = {
   clientId: 'mum0qIftHXSPAMLJyFa0rqpjTvtP8tYZ',
-  clientSecret: 'ATOAeBywdVhDuR35N5BpsGxpClncE7u88dsK65536VA7DDWf0DfzEe2fM36xgON11kd6A222AC2F',
-  tokenUrl: 'https://auth.atlassian.com/oauth/token',
+  // client_secret is securely stored in Cloudflare Worker
+  tokenUrl: 'https://tempo-oauth-proxy.tempo-time-tracker-for-firefox.workers.dev',
   redirectUri: 'https://claudio-ferraro.github.io/tempo-time-tracker-for-firefox/callback'
 };
 
@@ -85,10 +85,9 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
 async function exchangeCodeForTokens(code, codeVerifier) {
   try {
+    // Send to Cloudflare Worker - it adds the client_secret securely
     const requestBody = {
       grant_type: 'authorization_code',
-      client_id: OAUTH_CONFIG.clientId,
-      client_secret: OAUTH_CONFIG.clientSecret,
       code: code,
       redirect_uri: OAUTH_CONFIG.redirectUri,
       code_verifier: codeVerifier

@@ -1,0 +1,9 @@
+name = "tempo-oauth-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ATLASSIAN_CLIENT_ID = "mum0qIftHXSPAMLJyFa0rqpjTvtP8tYZ"
+
+# De client_secret wordt als secret toegevoegd via:
+# wrangler secret put ATLASSIAN_CLIENT_SECRET
