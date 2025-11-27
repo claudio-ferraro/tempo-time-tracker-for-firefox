@@ -459,6 +459,21 @@
     return null;
   }
 
+  // Get valid access token (auto-refreshes if needed)
+  async function getAccessToken() {
+    try {
+      const result = await browser.runtime.sendMessage({ type: 'auth:getToken' });
+      if (result.ok) {
+        return result.access_token;
+      }
+      console.error('Failed to get token:', result.error);
+      return null;
+    } catch (e) {
+      console.error('Error getting token:', e);
+      return null;
+    }
+  }
+
   // Search issues via Jira API - using issue picker for autocomplete
   async function searchIssues(query) {
     if (!loggedIn || !cloudId) {
@@ -467,8 +482,11 @@
     }
     
     try {
-      const result = await browser.storage.local.get('tempo_access_token');
-      const token = result.tempo_access_token;
+      const token = await getAccessToken();
+      if (!token) {
+        console.error('No valid token available');
+        return [];
+      }
       
       // Check if query contains an issue key (from URL or direct input)
       const issueKey = extractIssueKey(query);

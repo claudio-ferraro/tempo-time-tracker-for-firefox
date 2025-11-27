@@ -110,11 +110,11 @@ async function exchangeCodeForTokens(code, codeVerifier) {
     const tokens = await response.json();
     console.log('Tokens received successfully');
     
-    // Store tokens
+    // Store tokens with expiry (subtract 5 min buffer for safety)
     await browser.storage.local.set({
       tempo_access_token: tokens.access_token,
       tempo_refresh_token: tokens.refresh_token,
-      token_expires_at: Date.now() + (tokens.expires_in * 1000)
+      token_expires_at: Date.now() + ((tokens.expires_in - 300) * 1000)
     });
     
     return { ok: true, access_token: tokens.access_token };
@@ -123,6 +123,111 @@ async function exchangeCodeForTokens(code, codeVerifier) {
     return { ok: false, error: e.message };
   }
 }
+
+// ============================================
+// TOKEN REFRESH
+// ============================================
+async function refreshAccessToken() {
+  try {
+    const { tempo_refresh_token } = await browser.storage.local.get('tempo_refresh_token');
+    
+    if (!tempo_refresh_token) {
+      console.log('No refresh token available');
+      return { ok: false, error: 'No refresh token' };
+    }
+    
+    console.log('Refreshing access token...');
+    
+    const response = await fetch(OAUTH_CONFIG.tokenUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        grant_type: 'refresh_token',
+        refresh_token: tempo_refresh_token,
+        redirect_uri: OAUTH_CONFIG.redirectUri
+      })
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Token refresh failed:', response.status, errorText);
+      
+      // If refresh fails, clear tokens (user needs to re-login)
+      if (response.status === 401 || response.status === 403) {
+        await browser.storage.local.remove([
+          'tempo_access_token',
+          'tempo_refresh_token',
+          'token_expires_at',
+          'user_info',
+          'accessible_resources'
+        ]);
+        console.log('Tokens cleared - user needs to re-authenticate');
+      }
+      
+      return { ok: false, error: errorText };
+    }
+    
+    const tokens = await response.json();
+    console.log('Token refreshed successfully');
+    
+    // Store new tokens (Atlassian returns a new refresh token too)
+    await browser.storage.local.set({
+      tempo_access_token: tokens.access_token,
+      tempo_refresh_token: tokens.refresh_token || tempo_refresh_token,
+      token_expires_at: Date.now() + ((tokens.expires_in - 300) * 1000)
+    });
+    
+    return { ok: true, access_token: tokens.access_token };
+  } catch (e) {
+    console.error('Error refreshing token:', e);
+    return { ok: false, error: e.message };
+  }
+}
+
+/**
+ * Get a valid access token, refreshing if needed
+ */
+async function getValidAccessToken() {
+  const { tempo_access_token, token_expires_at } = await browser.storage.local.get([
+    'tempo_access_token',
+    'token_expires_at'
+  ]);
+  
+  if (!tempo_access_token) {
+    return { ok: false, error: 'Not authenticated' };
+  }
+  
+  // Check if token is expired or will expire soon
+  if (token_expires_at && Date.now() >= token_expires_at) {
+    console.log('Token expired, refreshing...');
+    const refreshResult = await refreshAccessToken();
+    if (refreshResult.ok) {
+      return { ok: true, access_token: refreshResult.access_token };
+    }
+    return refreshResult;
+  }
+  
+  return { ok: true, access_token: tempo_access_token };
+}
+
+// Set up periodic token refresh check
+browser.alarms.create('checkTokenExpiry', { periodInMinutes: 5 });
+browser.alarms.onAlarm.addListener(async (alarm) => {
+  if (alarm.name === 'checkTokenExpiry') {
+    const { token_expires_at, tempo_refresh_token } = await browser.storage.local.get([
+      'token_expires_at',
+      'tempo_refresh_token'
+    ]);
+    
+    // If token expires in less than 10 minutes, refresh proactively
+    if (tempo_refresh_token && token_expires_at && (token_expires_at - Date.now()) < 10 * 60 * 1000) {
+      console.log('Token expiring soon, refreshing proactively...');
+      await refreshAccessToken();
+    }
+  }
+});
 
 async function fetchAndStoreUserInfo(accessToken) {
   try {
@@ -287,6 +392,10 @@ browser.runtime.onMessage.addListener(async (msg) => {
     case 'settings:set':
       await setSettings(msg.settings);
       return { ok: true };
+    case 'auth:getToken':
+      return await getValidAccessToken();
+    case 'auth:refresh':
+      return await refreshAccessToken();
     case 'tempo:log-open':
       // Placeholder: open Tempo Timesheets form
       if (msg.issueKey) {
