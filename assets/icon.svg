@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366F1"/>
+      <stop offset="100%" style="stop-color:#4F46E5"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- Clock face -->
+  <circle cx="64" cy="64" r="40" fill="none" stroke="#fff" stroke-width="6" opacity="0.3"/>
+  <!-- Clock hands -->
+  <line x1="64" y1="64" x2="64" y2="36" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+  <line x1="64" y1="64" x2="84" y2="64" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+  <!-- Center dot -->
+  <circle cx="64" cy="64" r="6" fill="#fff"/>
+  <!-- Play indicator -->
+  <path d="M96 88 L112 100 L96 112 Z" fill="#22C55E"/>
+</svg>

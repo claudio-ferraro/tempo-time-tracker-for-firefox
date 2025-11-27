@@ -1,0 +1,13 @@
+{
+  "name": "tempo-time-tracker-firefox",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "web-ext run --source-dir . --verbose",
+    "build": "web-ext build --source-dir . --overwrite-dest",
+    "lint": "web-ext lint --source-dir ."
+  },
+  "devDependencies": {
+    "web-ext": "^7.11.0"
+  }
+}

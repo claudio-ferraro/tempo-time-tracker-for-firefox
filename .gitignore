@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+web-ext-artifacts/
+*.zip
+*.xpi
+
+# Configuration (contains OAuth Client ID during development)
+src/config.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
