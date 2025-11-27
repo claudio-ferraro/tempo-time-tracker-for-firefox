@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://addons.mozilla.org/firefox/addon/tempo-time-tracker/">
+  <a href="https://addons.mozilla.org/firefox/addon/tempo-time-tracker-for-firefox/">
     <img src="https://img.shields.io/badge/Firefox%20Add--ons-Install-orange?logo=firefox-browser" alt="Firefox Add-ons">
   </a>
   <a href="LICENSE">
@@ -44,7 +44,7 @@ Time Tracker for Firefox is free and available for all Tempo customers on Jira C
 
 ### From Firefox Add-ons (Recommended)
 
-1. Visit the [Tempo Time Tracker on Firefox Add-ons](https://addons.mozilla.org/firefox/addon/tempo-time-tracker/)
+1. Visit the [Tempo Time Tracker on Firefox Add-ons](https://addons.mozilla.org/firefox/addon/tempo-time-tracker-for-firefox/)
 2. Click **"Add to Firefox"**
 3. Click the extension icon and sign in with your Atlassian account
 4. Start tracking your time!
