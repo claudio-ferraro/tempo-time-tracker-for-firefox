@@ -199,6 +199,11 @@ Contributions are welcome! Feel free to:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 🤖 AI Assistance
+
+- Built with help from GitHub Copilot (LLM) to accelerate scaffolding, refactors, and documentation.
+- All changes are carefully reviewed and tested by humans before release.
+
 ## 🙏 Acknowledgments
 
 - [Tempo](https://www.tempo.io/) for their excellent time tracking platform
