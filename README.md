@@ -33,6 +33,7 @@ Time Tracker for Firefox is free and available for all Tempo customers on Jira C
 
 - ⏱️ **Real-time Trackers** - Track time with a floating overlay on every webpage
 - 🔍 **Issue Search** - Find Jira issues by key (e.g., "ABC-123"), URL, or text search  
+- 🧠 **Auto-Detect on Jira** - Automatically pre-fills the issue when started on a Jira issue page
 - 📊 **Multiple Timers** - Run as many trackers as you need for parallel tasks
 - 🔄 **Cross-Tab Sync** - Trackers stay synchronized across all browser tabs
 - 💾 **Persistent Timers** - Timers continue running even after closing Firefox

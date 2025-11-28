@@ -388,6 +388,33 @@
   let cloudId = null;
   let searchTimeout = null;
 
+  function getIssueKeyFromPage() {
+    try {
+      const url = new URL(window.location.href);
+      const selectedIssue = url.searchParams.get('selectedIssue');
+      if (selectedIssue && /([A-Z][A-Z0-9]+-\d+)/i.test(selectedIssue)) {
+        return selectedIssue.toUpperCase();
+      }
+
+      const path = url.pathname || '';
+      let m = path.match(/\/browse\/([A-Z][A-Z0-9]+-\d+)/i) || path.match(/\/issues\/([A-Z][A-Z0-9]+-\d+)/i);
+      if (m && m[1]) {
+        return m[1].toUpperCase();
+      }
+
+      m = url.href.match(/([A-Z][A-Z0-9]+-\d+)/i);
+      if (m && m[1]) {
+        return m[1].toUpperCase();
+      }
+
+      const titleMatch = (document.title || '').match(/([A-Z][A-Z0-9]+-\d+)/);
+      if (titleMatch && titleMatch[1]) {
+        return titleMatch[1].toUpperCase();
+      }
+    } catch (e) {}
+    return null;
+  }
+
   // Load trackers from storage
   async function loadTrackers() {
     try {
@@ -646,7 +673,9 @@
 
   function addTracker() {
     const id = Date.now();
-    trackers.push({ id, elapsed: 0, issue: null, description: '', paused: false, startedAt: Date.now() });
+    const detectedIssue = getIssueKeyFromPage();
+    const newTracker = { id, elapsed: 0, issue: detectedIssue || null, description: '', paused: false, startedAt: Date.now() };
+    trackers.push(newTracker);
     expandedTrackerId = null; // Start collapsed
     startTimer();
     saveTrackers();
