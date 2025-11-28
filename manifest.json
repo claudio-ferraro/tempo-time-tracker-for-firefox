@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tempo Time Tracker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Track time and log work to Tempo Timesheets directly from your browser. Start tracking with one click from any webpage.",
   "author": "Claudio Ferraro",
   "homepage_url": "https://github.com/claudio-ferraro/tempo-time-tracker-for-firefox",
